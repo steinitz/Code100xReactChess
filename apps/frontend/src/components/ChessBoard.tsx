@@ -1,12 +1,11 @@
 import { Chess, Color, Move, PieceSymbol, Square } from 'chess.js';
-import { MouseEvent, memo, useEffect, useState } from 'react';
+import { memo, MouseEvent, useEffect, useState } from 'react';
 import { MOVE } from '../screens/Game';
 import LetterNotation from './chess-board/LetterNotation';
 import LegalMoveIndicator from './chess-board/LegalMoveIndicator';
 import ChessSquare from './chess-board/ChessSquare';
 import NumberNotation from './chess-board/NumberNotation';
 import { drawArrow } from '../utils/canvas';
-import useWindowSize from '../hooks/useWindowSize';
 import Confetti from 'react-confetti';
 import MoveSound from '/move.wav';
 import CaptureSound from '/capture.wav';
@@ -14,31 +13,7 @@ import CaptureSound from '/capture.wav';
 import { useRecoilState } from 'recoil';
 
 import { isBoardFlippedAtom, movesAtom, userSelectedMoveIndexAtom } from '@repo/store/chessBoard';
-
-export function isPromoting(chess: Chess, from: Square, to: Square) {
-  if (!from) {
-    return false;
-  }
-
-  const piece = chess.get(from);
-
-  if (piece?.type !== 'p') {
-    return false;
-  }
-
-  if (piece.color !== chess.turn()) {
-    return false;
-  }
-
-  if (!['1', '8'].some((it) => to.endsWith(it))) {
-    return false;
-  }
-
-  return chess
-    .history({ verbose: true })
-    .map((it) => it.to)
-    .includes(to);
-}
+import { isPromoting } from '@/components/ChessBoardIsPromoting.tsx';
 
 export const ChessBoard = memo(
   ({
@@ -101,7 +76,7 @@ export const ChessBoard = memo(
       if (myColor === 'b') {
         setIsFlipped(true);
       }
-    }, [myColor]);
+    }, [myColor, setIsFlipped]);
 
     const clearCanvas = () => {
       setRightClickedSquares([]);
@@ -165,6 +140,7 @@ export const ChessBoard = memo(
       } else {
         setLastMove(null);
       }
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [moves]);
 
     useEffect(() => {
@@ -178,7 +154,7 @@ export const ChessBoard = memo(
         setBoard(chess.board());
         return;
       }
-    }, [userSelectedMoveIndex]);
+    }, [userSelectedMoveIndex, setBoard, chess, moves]);
 
     useEffect(() => {
       if (userSelectedMoveIndex !== null) {
@@ -191,7 +167,7 @@ export const ChessBoard = memo(
       } else {
         setBoard(chess.board());
       }
-    }, [moves]);
+    }, [moves, chess, setUserSelectedMoveIndex, userSelectedMoveIndex, setBoard]);
 
     return (
       <>

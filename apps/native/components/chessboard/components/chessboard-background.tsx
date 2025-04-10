@@ -1,4 +1,3 @@
-/* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import { View, StyleSheet, Text } from 'react-native';
 import { useChessboardProps } from '../context/props-context/hooks';

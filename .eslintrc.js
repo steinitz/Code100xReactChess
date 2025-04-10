@@ -8,7 +8,8 @@ module.exports = {
   rules: {
     "no-unused-vars": "off",
     "no-redeclare": "off",
-     "turbo/no-undeclared-env-vars": "off",
+    "turbo/no-undeclared-env-vars": "off",
+    "react-native/no-inline-styles": 0
   },
   "globals": {
     "NodeJS": true

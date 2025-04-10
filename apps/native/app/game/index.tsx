@@ -99,7 +99,7 @@ function get_captured_pieces(moves: Move[], color: string) {
   const captured = { p: 0, n: 0, b: 0, r: 0, q: 0 };
 
   for (const move of moves) {
-    if (move.hasOwnProperty('captured') && move.color !== color[0]) {
+    if (!!Object.getOwnPropertyDescriptor(move, 'captured') && move.color !== color[0]) {
       captured[move.captured]++;
     }
   }

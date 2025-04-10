@@ -9,5 +9,8 @@ module.exports = {
     "no-unused-vars": "off",
     "no-redeclare": "off",
      "turbo/no-undeclared-env-vars": "off",
-  }
+  },
+  "globals": {
+    "NodeJS": true
+  },
 };

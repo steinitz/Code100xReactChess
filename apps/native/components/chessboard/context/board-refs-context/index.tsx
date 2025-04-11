@@ -33,7 +33,6 @@ const BoardRefsContextProviderComponent = React.forwardRef<ChessboardRef, { chil
           const row = `${8 - Math.round(y)}`;
           const square = `${col}${row}` as Square;
 
-          // eslint-disable-next-line react-hooks/rules-of-hooks
           acc = { ...acc, [square]: useRef(null) };
         }
       }
